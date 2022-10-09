@@ -1,0 +1,14 @@
+.
+├── ./README.md
+├── ./directorytree.txt
+├── ./requirements.txt
+├── ./src
+│   ├── ./src/__init__.py
+│   ├── ./src/client.py
+│   └── ./src/server.py
+└── ./tests
+    ├── ./tests/__init__.py
+    ├── ./tests/test_client.py
+    └── ./tests/test_server.py
+
+2 directories, 9 files
