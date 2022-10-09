@@ -3,6 +3,7 @@
 import socket
 import threading
 import pickle
+#import json
 
 HEADER = 64
 PORT = 5050
@@ -26,24 +27,21 @@ def handle_client(conn, addr):
     #The dunction checks for a connection.
     connected = True
     while connected:
-        #A message is received from the client.  
-        msg_length = conn.recv(HEADER)
-        if msg_length:
-            #msg = conn.recv(msg_length).decode(FORMAT)
-            msg = conn.recv(131072)
-        unpickled_dict = pickle.loads(msg)
-
+        try:
+            msg = conn.recv(32768)
+            unpickled_msg = pickle.loads(msg)
+            print(f"[{addr}] {unpickled_msg}")
         #To disconnect a client from the server, set msg to disconnected message
-        if msg == DISCONNECT_MESSAGE:
-            connected = False
-
-        print(f"[{addr}] {unpickled_dict}")
-        conn.send("Msg received".encode(FORMAT))
+            if msg == DISCONNECT_MESSAGE:
+                connected = False
+            conn.send("Msg received".encode(FORMAT))
+        except IOError:
+            print("Error: Can't find or read file/data")
 
     #Close a connection between a client and server.
     conn.close()
 
-def start():
+def start_listening():
     """A function for the server to start listening for client connections"""
     server.listen()
     print(f"[LISTENING] server is listening on {SERVER}")
@@ -61,4 +59,4 @@ def start():
 
 
 print("[STARTING] server is starting...")
-start()
+start_listening()
