@@ -27,7 +27,14 @@ def dict_data():
     for i in keys:
         dicts[name[i]]= age[i]
         return dicts
-    print(dicts) 
+    print(dicts)
+
+
+def text_file():
+    """A Function to create a txt file to be sent to the server"""
+    txt_file = open("encoded_text.txt", "wb")
+    txt_file.close()
+    return txt_file
 
 def send(msg):
     """A function to send pickled data to a server"""
