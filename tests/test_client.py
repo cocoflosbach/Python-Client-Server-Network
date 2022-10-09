@@ -1,4 +1,4 @@
-""" Perform Unit Testing for the client program connecting to the server"""
+"""Perform Unit Testing for client program connecting to the server"""
 
 import unittest
 import socket
@@ -11,18 +11,18 @@ class TestClient(unittest.TestCase):
     def start_fake_server(self):
         """This function creates and starts a fake server for the test case"""
         server = socket.socket()
-        server.bind((socket.gethostbyname(socket.gethostname), 8080))
+        server.bind(("192.168.1.35", 8080))
         server.listen(0)
         server.accept()
         server.close()
 
     def test_client_connection(self):
-        """Tis function tests the client connection to the fake server"""
+        """This function tests the client connection to the fake server"""
         thread = threading.Thread(target=self.start_fake_server)
         thread.start()
 
         client = socket.socket()
-        client.connect((socket.gethostbyname(socket.gethostname), 8080))
+        client.connect(("192.168.1.35", 8080))
         client.close()
 
         thread.join()
