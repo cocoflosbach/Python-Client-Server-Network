@@ -2,6 +2,7 @@
 
 import socket
 import pickle
+#import json
 
 
 HEADER = 64
@@ -26,30 +27,28 @@ def dict_data():
     for i in keys:
         dicts[name[i]]= age[i]
         return dicts
-    print(dicts)
-    # pickled_dict = pickle.dumps(dicts)   
+    print(dicts) 
 
 def send(msg):
     """A function to send pickled data to a server"""
-    #file = open("df.p", "wb")
-    message = pickle.dumps(msg)
-
-    #message = msg.encode(FORMAT)
-    #msg_length = len(message)
-    #send_length = struct.pack("!Q", msg_length)
-    # send_length = str(msg_length).encode(FORMAT)
-    # send_length += b" " * (HEADER - len(send_length))
-    #client.send(send_length)
-    client.send(message)
-    print(f"This is a picked dictionary \n {message}")
-
-    print(client.recv(2048).decode(FORMAT))
-
+    try:
+        # file = open("encoded_dict.json", "wb")
+        try:
+            #  # message = json.dump(msg, file)
+            message = pickle.dumps(msg)
+            client.sendall(message)
+        finally:
+            #file = open("encoded_dict.txt", "wb")
+            print(f"This is a picked dictionary \n {message}")
+            print(client.recv(2048).decode(FORMAT))
+    except EOFError:
+        print("[CONNECTION ERROR] A connection to the server could not be made")
 
 
-send("Hello World")
-send("My name is Coco")
-send("I am a software engineer")
+
+# send("Hello World")
+# send("My name is Coco")
+# send("I am a software engineer")
 send(dict_data())
 
-send(DISCONNECT_MESSAGE)
+#send(DISCONNECT_MESSAGE)
