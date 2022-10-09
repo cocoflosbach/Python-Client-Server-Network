@@ -33,6 +33,7 @@ def dict_data():
 def text_file():
     """A Function to create a txt file to be sent to the server"""
     txt_file = open("encoded_text.txt", "wb")
+    txt_file.write(b"This is a text file containing all the information needed to start this program")
     txt_file.close()
     return txt_file
 
@@ -52,10 +53,8 @@ def send(msg):
         print("[CONNECTION ERROR] A connection to the server could not be made")
 
 
-
-# send("Hello World")
-# send("My name is Coco")
-# send("I am a software engineer")
+#send(text_file())
 send(dict_data())
+
 
 #send(DISCONNECT_MESSAGE)
